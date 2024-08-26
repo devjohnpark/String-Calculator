@@ -31,15 +31,13 @@ class StringCalculatorTest {
         assertEquals(231, stringCalculator.calculate("10,221:0"));
         assertEquals(0, stringCalculator.calculate(""));
         assertEquals(1, stringCalculator.calculate("1,0,0"));
+        assertEquals(3, stringCalculator.calculate("1:2:0"));
         assertThrows(RuntimeException.class, () -> stringCalculator.calculate("1,-3"));
     }
 
     @Test
     void getSeparator() {
-//        String pre = "//";
-//        String post = "\n";
         char expectedSeparator = ';';
-//        String input = "//"
         assertEquals(expectedSeparator, stringCalculator.getSeparator("//;\n1;2;3"));
     }
 
@@ -53,11 +51,40 @@ class StringCalculatorTest {
     }
 
     @Test
-    void addNumber() {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(3);
-        queue.add(2);
-        queue.add(3);
-        assertEquals(323, stringCalculator.addNumber(queue));
+    void updateCalculationResult() {
+        // Given
+        StringCalculator.CalculationResult cr = new StringCalculator.CalculationResult();
+        char separator = ',';
+
+        // When - 처리할 숫자 입력
+        stringCalculator.updateCalculationResult('5', separator, cr);
+
+        // Then
+        assertEquals(5, cr.getNum());
+        assertEquals(0, cr.getSum());
+    }
+
+//    @Test
+//    void resultOfCalculation() {
+//        cr.setSum(cr.getSum() + cr.getNum());
+//        return cr.getSum();
+//    }
+
+    @Test
+    void checkNegativeNumber() {
+        assertThrows(RuntimeException.class, () -> stringCalculator.checkNegativeNumber('-'));
+    }
+
+    @Test
+    void isSeparator() {
+        assertEquals(true, stringCalculator.isSeparator(';', ';'));
+        assertNotEquals(true, stringCalculator.isSeparator(';', ','));
+        assertEquals(true, stringCalculator.isSeparator(',', ':'));
+    }
+
+    @Test
+    void isCharNumber() {
+        assertNotEquals(true,  stringCalculator.isCharNumber('a'));
+        assertEquals(true,  stringCalculator.isCharNumber('9'));
     }
 }
