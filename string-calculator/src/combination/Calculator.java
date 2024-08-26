@@ -1,8 +1,8 @@
 package combination;
 
-// Problem: production code and test code are in the same class
-// Result: The class is not clear. And it deploys together to production server
-// Solution: Separate production code and test code
+// Problem: production code and test code are in the same class.
+// Result: The class is not clear. And it deploys together to production server.
+// Solution: Separate production code and test code.
 public class Calculator {
     int add(int a, int b) {
         return a + b;
