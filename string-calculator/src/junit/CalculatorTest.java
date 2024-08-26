@@ -1,5 +1,6 @@
 package junit;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,12 @@ class CalculatorTest {
     @BeforeEach
     public void setUp() {
         calc = new Calculator();
+        System.out.println("Test setup");
+    }
+
+    @AfterEach
+    public void tearDown() {
+        System.out.println("Test closed");
     }
 
     @Test
