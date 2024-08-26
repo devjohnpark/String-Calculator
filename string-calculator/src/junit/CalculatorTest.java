@@ -1,5 +1,6 @@
 package junit;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     // Remove duplicate code
-    Calculator calc = new Calculator();
+    private Calculator calc;
+
+    @BeforeEach
+    public void setUp() {
+        calc = new Calculator();
+    }
 
     @Test
     void add() {
