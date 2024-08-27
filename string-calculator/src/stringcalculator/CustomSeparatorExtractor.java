@@ -2,8 +2,8 @@ package stringcalculator;
 
 import java.util.Optional;
 
-// 문자 구분자 추출자 (커스텀 구분자, 디폴트 구분자)
-class SeparatorExtractor {
+// 커스텀 구분자 추출하는 역할
+class CustomSeparatorExtractor {
     private final String CUSTOM_SEPARATOR_PREFIX = "//";
     private final String CUSTOM_SEPARATOR_SUFFIX = "\n";
 

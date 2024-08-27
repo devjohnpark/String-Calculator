@@ -7,34 +7,31 @@ package stringcalculator;
 // 4. 구분자는 , 와 : 로 구분
 
 // OOP
-// 1. 문자열 전체 계산 조립 책임자
-// 2. 구분자 추출 책임자
-// 3. 계산 결과 책임자
-// 4. 입력된 문자열 계산 프로세싱 책임자
+// 1. 문자열 계산하는 역할
+// 2. 구분자 숫자 유효성 확인하는 역할
+// 3. 커스텀 구분자 추출하는 역할
+// 4. 산술 결과 저장하는 역할
+// 5. 입력된 문자열을 산술하는 역할
 
 import java.util.Optional;
 
-// 문자열 전체 계산 조립자
+// 문자열 계산하는 역할
 public class StringCalculator {
 
-    private StringArithmetic stringArithmetic;
-    private SeparatorExtractor separatorExtractor;
+    private final StringArithmetic stringArithmetic;
+    private final CharacterValidator characterValidator;
 
     public StringCalculator() {
         this.stringArithmetic = new StringArithmetic();
-        this.separatorExtractor = new SeparatorExtractor();
+        this.characterValidator = new CharacterValidator();
     }
 
     public int calculate(String input) {
         if (input == null || input.isEmpty()) {
             return 0;
         }
-
-        Optional<Character> separator = separatorExtractor.getCustomSeparator(input);
-
-        CalculationResult calculationResult = new CalculationResult();
-
-        return stringArithmetic.doArithmetic(input, calculationResult, separator);
+        characterValidator.checkCustomSeparator(input);
+        return stringArithmetic.doArithmetic(input, characterValidator);
     }
 }
 

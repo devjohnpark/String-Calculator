@@ -20,20 +20,19 @@ class StringCalculatorTest {
 
     @AfterEach
     public void tearDown() {
-
+        stringCalculator = null;
     }
 
     @Test
     void calculate() {
-        StringCalculator calculator = new StringCalculator();
-
-
 
         assertEquals(6, stringCalculator.calculate("//;\n1;2;3"));
         assertEquals(4, stringCalculator.calculate("1,3"));
+        assertEquals(11, stringCalculator.calculate("1,3,7"));
         assertEquals(15, stringCalculator.calculate("10,2:3"));
         assertEquals(231, stringCalculator.calculate("10,221:0"));
         assertEquals(0, stringCalculator.calculate(""));
+        assertEquals(1, stringCalculator.calculate("1"));
         assertEquals(1, stringCalculator.calculate("1,0,0"));
         assertEquals(3, stringCalculator.calculate("1:2:0"));
         assertThrows(RuntimeException.class, () -> stringCalculator.calculate("1,-3"));
