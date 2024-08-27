@@ -25,6 +25,10 @@ class StringCalculatorTest {
 
     @Test
     void calculate() {
+        StringCalculator calculator = new StringCalculator();
+
+
+
         assertEquals(6, stringCalculator.calculate("//;\n1;2;3"));
         assertEquals(4, stringCalculator.calculate("1,3"));
         assertEquals(15, stringCalculator.calculate("10,2:3"));
@@ -35,56 +39,56 @@ class StringCalculatorTest {
         assertThrows(RuntimeException.class, () -> stringCalculator.calculate("1,-3"));
     }
 
-    @Test
-    void getSeparator() {
-        char expectedSeparator = ';';
-        assertEquals(expectedSeparator, stringCalculator.getSeparator("//;\n1;2;3"));
-    }
-
-    @Test
-    void isCustomSeparator() {
-        String pre = "//";
-        String post = "\n";
-        char expectedSeparator = ';';
-        String input = pre + expectedSeparator + post;
-        assertEquals(true, stringCalculator.isCustomSeparator(input, pre, post));
-    }
-
-    @Test
-    void updateCalculationResult() {
-        // Given
-        StringCalculator.CalculationResult cr = new StringCalculator.CalculationResult();
-        char separator = ',';
-
-        // When - 처리할 숫자 입력
-        stringCalculator.updateCalculationResult('5', separator, cr);
-
-        // Then
-        assertEquals(5, cr.getNum());
-        assertEquals(0, cr.getSum());
-    }
+//    @Test
+//    void getSeparator() {
+//        char expectedSeparator = ';';
+//        assertEquals(expectedSeparator, stringCalculator.getSeparator("//;\n1;2;3"));
+//    }
+//
+//    @Test
+//    void isCustomSeparator() {
+//        String pre = "//";
+//        String post = "\n";
+//        char expectedSeparator = ';';
+//        String input = pre + expectedSeparator + post;
+//        assertEquals(true, stringCalculator.isCustomSeparator(input, pre, post));
+//    }
+//
+//    @Test
+//    void updateCalculationResult() {
+//        // Given
+//        CalculationResult cr = new StringCalculator.CalculationResult();
+//        char separator = ',';
+//
+//        // When - 처리할 숫자 입력
+//        stringCalculator.updateCalculationResult('5', separator, cr);
+//
+//        // Then
+//        assertEquals(5, cr.getNum());
+//        assertEquals(0, cr.getSum());
+//    }
 
 //    @Test
 //    void resultOfCalculation() {
 //        cr.setSum(cr.getSum() + cr.getNum());
 //        return cr.getSum();
 //    }
-
-    @Test
-    void checkNegativeNumber() {
-        assertThrows(RuntimeException.class, () -> stringCalculator.checkNegativeNumber('-'));
-    }
-
-    @Test
-    void isSeparator() {
-        assertEquals(true, stringCalculator.isSeparator(';', ';'));
-        assertNotEquals(true, stringCalculator.isSeparator(';', ','));
-        assertEquals(true, stringCalculator.isSeparator(',', ':'));
-    }
-
-    @Test
-    void isCharNumber() {
-        assertNotEquals(true,  stringCalculator.isCharNumber('a'));
-        assertEquals(true,  stringCalculator.isCharNumber('9'));
-    }
+//
+//    @Test
+//    void checkNegativeNumber() {
+//        assertThrows(RuntimeException.class, () -> stringCalculator.checkNegativeNumber('-'));
+//    }
+//
+//    @Test
+//    void isSeparator() {
+//        assertEquals(true, stringCalculator.isSeparator(';', ';'));
+//        assertNotEquals(true, stringCalculator.isSeparator(';', ','));
+//        assertEquals(true, stringCalculator.isSeparator(',', ':'));
+//    }
+//
+//    @Test
+//    void isCharNumber() {
+//        assertNotEquals(true,  stringCalculator.isCharNumber('a'));
+//        assertEquals(true,  stringCalculator.isCharNumber('9'));
+//    }
 }

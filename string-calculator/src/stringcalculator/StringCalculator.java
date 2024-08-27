@@ -5,77 +5,106 @@ package stringcalculator;
 // 2. //n과 \n 사이의 문자는 커스텀 구분자로
 // 3. 음수시 RuntimeException 예외 처리
 // 4. 구분자는 , 와 : 로 구분
+
+// OOP
+// 1. 문자열 전체 계산 조립 책임자
+// 2. 구분자 추출 책임자
+// 3. 계산 결과 책임자
+// 4. 입력된 문자열 계산 프로세싱 책임자
+
+import java.util.Optional;
+
+// 문자열 전체 계산 조립자
 public class StringCalculator {
 
+    private StringArithmetic stringArithmetic;
+    private SeparatorExtractor separatorExtractor;
+
+    public StringCalculator() {
+        this.stringArithmetic = new StringArithmetic();
+        this.separatorExtractor = new SeparatorExtractor();
+    }
+
     public int calculate(String input) {
-
-        char separator = getSeparator(input);
-        CalculationResult cr = new CalculationResult();
-        char currentChar = '0';
-
-        for (int i = 0; i < input.length(); i++) {
-            currentChar = input.charAt(i);
-            checkNegativeNumber(currentChar);
-            updateCalculationResult(currentChar, separator, cr);
+        if (input == null || input.isEmpty()) {
+            return 0;
         }
 
-        return resultOfCalculation(cr);
-    }
+        Optional<Character> separator = separatorExtractor.getCustomSeparator(input);
 
-    public static class CalculationResult {
-        private int sum;
-        private int num;
+        CalculationResult calculationResult = new CalculationResult();
 
-        public int getSum() { return sum; }
-        public int getNum() { return num; }
-        public void setSum(int sum) { this.sum = sum; }
-        public void setNum(int num) { this.num = num; }
-    }
-
-    public void updateCalculationResult(char currentChar, char separator, CalculationResult cr) {
-        if (isCharNumber(currentChar)) {
-            cr.setNum(cr.getNum() * 10 + (currentChar - '0'));
-        } else if (isSeparator(currentChar, separator)) {
-            cr.setSum(cr.getSum() + cr.getNum());
-            cr.setNum(0);
-        }
-    }
-
-    public int resultOfCalculation(CalculationResult cr) {
-        cr.setSum(cr.getSum() + cr.getNum());
-        return cr.getSum();
-    }
-
-    public void checkNegativeNumber(char currentChar) {
-        if (currentChar == '-') {
-            throw new RuntimeException("Negative numbers are not allowed");
-        }
-    }
-
-    public boolean isSeparator(char currentChar, char separator) {
-        return currentChar == separator || currentChar == ',' || currentChar == ':';
-    }
-
-    public boolean isCharNumber(char currentChar) {
-        return currentChar >= '0' && currentChar <= '9';
-    }
-
-    public char getSeparator(String input) {
-        String pre = "//";
-        String post = "\n";
-        char separator = ' ';
-        if (isCustomSeparator(input, pre, post)) {
-            separator = input.charAt(pre.length());
-        }
-        return separator;
-    }
-
-    public Boolean isCustomSeparator(String input, String pre, String post) {
-        return input.startsWith(pre) && input.substring(pre.length() + 1).startsWith(post);
+        return stringArithmetic.doArithmetic(input, calculationResult, separator);
     }
 }
 
 
-
-
-
+//public class StringCalculator {
+//
+//    public int calculate(String input) {
+//        if (input == null || input.isEmpty()) {
+//            return 0;
+//        }
+//
+//        char customSeparator = getSeparator(input);
+//        CalculationResult cr = new CalculationResult();
+//
+//        for (int i = 0; i < input.length(); i++) {
+//            char currentChar = input.charAt(i);
+//            checkNegativeNumber(currentChar);
+//            updateCalculationResult(currentChar, customSeparator, cr);
+//        }
+//        return resultOfCalculation(cr);
+//    }
+//
+//    private static class CalculationResult {
+//        private int sum;
+//        private int num;
+//
+//        public int getSum() { return sum; }
+//        public int getNum() { return num; }
+//        public void setSum(int sum) { this.sum = sum; }
+//        public void setNum(int num) { this.num = num; }
+//    }
+//
+//    private void updateCalculationResult(char currentChar, char customSeparator, CalculationResult cr) {
+//        if (isDigit(currentChar)) {
+//            cr.setNum(cr.getNum() * 10 + (currentChar - '0'));
+//        } else if (isSeparator(currentChar, customSeparator)) {
+//            cr.setSum(cr.getSum() + cr.getNum());
+//            cr.setNum(0);
+//        }
+//    }
+//
+//    private int resultOfCalculation(CalculationResult cr) {
+//        cr.setSum(cr.getSum() + cr.getNum());
+//        return cr.getSum();
+//    }
+//
+//    private void checkNegativeNumber(char currentChar) {
+//        if (currentChar == '-') {
+//            throw new RuntimeException("Negative numbers are not allowed");
+//        }
+//    }
+//
+//    private boolean isSeparator(char currentChar, char customSeparator) {
+//        return currentChar == customSeparator || currentChar == ',' || currentChar == ':';
+//    }
+//
+//    private boolean isDigit(char currentChar) {
+//        return currentChar >= '0' && currentChar <= '9';
+//    }
+//
+//    private char getSeparator(String input) {
+//        if (isCustomSeparator(input)) {
+//            return input.charAt(SEPARATOR_PREFIX.length());
+//        }
+//        return ' ';
+//    }
+//
+//    private Boolean isCustomSeparator(String input) {
+//        return input.startsWith(StringCalculator.SEPARATOR_PREFIX) && input.substring(StringCalculator.SEPARATOR_PREFIX.length() + 1).startsWith(StringCalculator.SEPARATOR_SUFFIX);
+//    }
+//}
+//
+//
