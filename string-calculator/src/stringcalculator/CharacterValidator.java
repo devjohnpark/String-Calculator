@@ -2,7 +2,7 @@ package stringcalculator;
 
 import java.util.Optional;
 
-// 문자(구분자, 숫자) 유효성 확인하는 역할
+// 문자(구분자, 숫자)의 유효성 확인하는 역할
 class CharacterValidator {
 
     private static final char DEFAULT_SEPARATOR1 = ',';
@@ -18,15 +18,18 @@ class CharacterValidator {
         this.customSeparator = customSeparator;
     }
 
-//    public boolean isSeparator(char currentChar, Optional<Character> separator) {
-////        return separator.map(value -> value == currentChar)
-////                .orElse(isDefaultSeparator(currentChar));
-//    }
-
-    public void checkCustomSeparator(String input) {
+    public void validCustomSeparator(String input) {
         if (isCustomSeparator(input)) {
             this.customSeparator = Optional.of(input.charAt(CUSTOM_SEPARATOR_PREFIX.length()));
         }
+    }
+
+    public boolean isDigit(char currentChar) {
+        return currentChar >= MIN_DIGIT && currentChar <= MAX_DIGIT;
+    }
+
+    public boolean isNegativeNumber(char currentChar) {
+        return currentChar == '-';
     }
 
     public boolean isSeparator(char currentChar) {
@@ -37,20 +40,11 @@ class CharacterValidator {
         return input.startsWith(CUSTOM_SEPARATOR_PREFIX) && input.substring(CUSTOM_SEPARATOR_PREFIX.length() + 1).startsWith(CUSTOM_SEPARATOR_SUFFIX);
     }
 
-
     private boolean isCustomSeparator(char currentChar) {
         return customSeparator.isPresent() && currentChar == customSeparator.get();
     }
 
     private boolean isDefaultSeparator(char currentChar) {
         return currentChar == DEFAULT_SEPARATOR1 || currentChar == DEFAULT_SEPARATOR2;
-    }
-
-    public boolean isDigit(char currentChar) {
-        return currentChar >= MIN_DIGIT && currentChar <= MAX_DIGIT;
-    }
-
-    public boolean isNegativeNumber(char currentChar) {
-        return currentChar == '-';
     }
 }

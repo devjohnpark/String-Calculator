@@ -7,22 +7,18 @@ package stringcalculator;
 // 4. 구분자는 , 와 : 로 구분
 
 // OOP
-// 1. 문자열 계산하는 역할
-// 2. 구분자 숫자 유효성 확인하는 역할
-// 3. 커스텀 구분자 추출하는 역할
-// 4. 산술 결과 저장하는 역할
-// 5. 입력된 문자열을 산술하는 역할
+// 1. 문자열을 계산하는 역할
+// 2. 문자(구분자/숫자)의 유효성 확인하는 역할
+// 3. 커스텀 구분자를 추출하는 역할
+// 4. 산술 결과를 저장하는 역할
 
-import java.util.Optional;
 
-// 문자열 계산하는 역할
+// 문자열을 계산하는 역할
 public class StringCalculator {
 
-    private final StringArithmetic stringArithmetic;
     private final CharacterValidator characterValidator;
 
     public StringCalculator() {
-        this.stringArithmetic = new StringArithmetic();
         this.characterValidator = new CharacterValidator();
     }
 
@@ -30,8 +26,72 @@ public class StringCalculator {
         if (input == null || input.isEmpty()) {
             return 0;
         }
-        characterValidator.checkCustomSeparator(input);
-        return stringArithmetic.doArithmetic(input, characterValidator);
+        characterValidator.validCustomSeparator(input);
+        return doCalculation(input, new CalculationResult());
+    }
+
+    private int doCalculation(String input, CalculationResult calculationResult) {
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+            checkNegativeNumber(currentChar);
+            updateCalculationResult(currentChar, calculationResult);
+        }
+        return getCalculationResult(calculationResult);
+    }
+
+    private void checkNegativeNumber(char currentChar) {
+        if (characterValidator.isNegativeNumber(currentChar)) {
+            throw new RuntimeException("Negative numbers are not allowed");
+        }
+    }
+
+    private void updateCalculationResult(char currentChar, CalculationResult calculationResult) {
+        if (characterValidator.isDigit(currentChar)) {
+            calculationResult.addDigit(currentChar - '0');
+        } else if (characterValidator.isSeparator(currentChar)) {
+            calculationResult.addToSum();
+        }
+    }
+
+    private int getCalculationResult(CalculationResult calculationResult) {
+        calculationResult.addToSum(); // 마지막 숫자 더하기
+        return calculationResult.getSum(); // 합계 반환
+    }
+
+    // 산술 결과 저장하는 역할
+    private static class CalculationResult {
+        private int sum;
+        private int num;
+
+        public int getSum() {
+            return sum;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        private void setSum(int sum) {
+            this.sum = sum;
+        }
+
+        private void setNum(int num) {
+            this.num = num;
+        }
+
+        // 모든 숫자의 총합을 위한 메서드
+        public void addToSum() {
+            int currentSum = getSum();
+            int currentNum = getNum();
+            setSum(currentSum + currentNum);
+            setNum(0);  // num 값을 초기화
+        }
+
+        // 특정 숫자를 구하기 위한 메서드
+        public void addDigit(int digit) {
+            int newNum = getNum() * 10 + digit;
+            setNum(newNum);
+        }
     }
 }
 

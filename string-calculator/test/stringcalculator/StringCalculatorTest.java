@@ -18,11 +18,6 @@ class StringCalculatorTest {
         stringCalculator = new StringCalculator();
     }
 
-    @AfterEach
-    public void tearDown() {
-        stringCalculator = null;
-    }
-
     @Test
     void calculate() {
 
