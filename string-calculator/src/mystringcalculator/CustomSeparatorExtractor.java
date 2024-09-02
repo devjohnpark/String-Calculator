@@ -4,8 +4,8 @@ import java.util.Optional;
 
 // 커스텀 구분자를 추출하는 역할
 class CustomSeparatorExtractor {
-    public final String CUSTOM_SEPARATOR_PREFIX = "//";
-    public final String CUSTOM_SEPARATOR_SUFFIX = "\n";
+    private final String CUSTOM_SEPARATOR_PREFIX = "//";
+    private final String CUSTOM_SEPARATOR_SUFFIX = "\n";
 
     public Optional<Character> getCustomSeparator(String input) {
         if (isCustomSeparator(input)) {

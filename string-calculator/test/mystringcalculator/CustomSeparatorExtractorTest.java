@@ -23,7 +23,7 @@ class CustomSeparatorExtractorTest {
     void getCustomSeparator_custom() {
         // Given
         char customSeparator = ';';
-        String input = customSeparatorExtractor.CUSTOM_SEPARATOR_PREFIX + customSeparator + customSeparatorExtractor.CUSTOM_SEPARATOR_SUFFIX;
+        String input = "//"+ customSeparator + "\n";
 
         // When
         Optional<Character> result = customSeparatorExtractor.getCustomSeparator(input);

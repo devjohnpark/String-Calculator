@@ -50,7 +50,7 @@ class CharacterValidatorTest {
         characterValidator.validCustomSeparator(input);
 
         // When, Then
-        assertTrue(characterValidator.isSeparator(characterValidator.DEFAULT_SEPARATOR1));
-        assertTrue(characterValidator.isSeparator(characterValidator.DEFAULT_SEPARATOR2));
+        assertTrue(characterValidator.isSeparator(','));
+        assertTrue(characterValidator.isSeparator(':'));
     }
 }
